@@ -242,8 +242,8 @@
     }
     .products-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 1.5rem;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 2rem;
     }
     .product-card {
       background: var(--white);
@@ -252,13 +252,15 @@
       transition: transform .2s, box-shadow .2s;
     }
     .product-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,.1); }
+    .product-card { cursor: pointer; }
     .product-img {
-      aspect-ratio: 1;
+      aspect-ratio: 4 / 5;
       background: var(--green);
       display: flex; align-items: center; justify-content: center;
       overflow: hidden;
+      padding: 1rem;
     }
-    .product-img img { width: 100%; height: 100%; object-fit: cover; }
+    .product-img img { width: 100%; height: 100%; object-fit: contain; }
     /* placeholder shown when no image set */
     .product-img-placeholder {
       width: 55%;
@@ -609,6 +611,85 @@
     }
 
     /* ============================================================
+       PRODUCT QUICK-VIEW MODAL (click a product to expand it)
+    ============================================================ */
+    .product-modal-overlay {
+      display: none;
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,.6);
+      z-index: 250;
+    }
+    .product-modal-overlay.open { display: block; }
+
+    .product-modal {
+      display: none;
+      position: fixed;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 90%; max-width: 900px;
+      max-height: 88vh;
+      background: var(--cream);
+      z-index: 251;
+      overflow-y: auto;
+      box-shadow: 0 20px 60px rgba(0,0,0,.35);
+    }
+    .product-modal.open { display: block; }
+
+    .product-modal-close {
+      position: absolute; top: 1rem; right: 1rem;
+      background: var(--green);
+      color: var(--cream);
+      width: 36px; height: 36px;
+      font-size: 1.1rem;
+      z-index: 5;
+    }
+
+    .product-modal-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+    .product-modal-img {
+      background: var(--green);
+      display: flex; align-items: center; justify-content: center;
+      padding: 2rem;
+      min-height: 380px;
+    }
+    .product-modal-img img { width: 100%; height: 100%; object-fit: contain; max-height: 480px; }
+
+    .product-modal-details {
+      padding: 2.5rem;
+      display: flex; flex-direction: column;
+    }
+    .product-modal-details h3 {
+      font-family: 'Space Mono', monospace;
+      font-size: 1.5rem;
+      line-height: 1.2;
+      margin-bottom: 1rem;
+    }
+    .product-modal-desc {
+      line-height: 1.7;
+      opacity: .75;
+      margin-bottom: 1.5rem;
+    }
+    .product-modal-price {
+      font-family: 'Space Mono', monospace;
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin: .5rem 0 1.5rem;
+    }
+    .add-btn-large {
+      padding: 1rem 2rem;
+      font-size: .8rem;
+      align-self: flex-start;
+    }
+
+    @media (max-width: 768px) {
+      .product-modal-inner { grid-template-columns: 1fr; }
+      .product-modal { width: 92%; max-height: 90vh; }
+      .product-modal-img { min-height: 260px; }
+    }
+
+    /* ============================================================
        RESPONSIVE
     ============================================================ */
     @media (max-width: 768px) {
@@ -944,6 +1025,18 @@
 
 
 <!-- ============================================================
+     PRODUCT QUICK-VIEW MODAL
+============================================================ -->
+<div class="product-modal-overlay" id="product-modal-overlay" onclick="closeProductModal()"></div>
+<div class="product-modal" id="product-modal">
+  <button class="product-modal-close" onclick="closeProductModal()">✕</button>
+  <div class="product-modal-inner" id="product-modal-inner">
+    <!-- Filled by JS when a product is clicked -->
+  </div>
+</div>
+
+
+<!-- ============================================================
      JAVASCRIPT
      ─────────────────────────────────────────────────────────
      You can edit everything in this section without touching
@@ -1047,7 +1140,7 @@ function renderProducts() {
             style="background:${v.color || '#ccc'}"
             title="${v.label || ''}"
             aria-label="${v.label || 'variant'}"
-            onclick="selectVariant(${p.id}, ${i})"
+            onclick="event.stopPropagation(); selectVariant(${p.id}, ${i})"
           ></button>
         `).join('')}
         <span class="variant-label">${activeVariant ? activeVariant.label : ''}</span>
@@ -1055,7 +1148,7 @@ function renderProducts() {
     ` : '';
 
     return `
-      <div class="product-card">
+      <div class="product-card" onclick="openProductModal(${p.id})">
         <div class="product-img">
           ${displayImage
             ? `<img src="${displayImage}" alt="${p.name}" />`
@@ -1067,7 +1160,7 @@ function renderProducts() {
           ${swatches}
           <div class="product-footer">
             <span class="product-price">₱${p.price.toLocaleString()}</span>
-            <button class="add-btn" id="add-${p.id}" onclick="addToCart(${p.id})">ADD TO CART</button>
+            <button class="add-btn" id="add-${p.id}" onclick="event.stopPropagation(); addToCart(${p.id})">ADD TO CART</button>
           </div>
         </div>
       </div>
@@ -1079,6 +1172,66 @@ function renderProducts() {
 function selectVariant(productId, idx) {
   selectedVariant[productId] = idx;
   renderProducts();
+  if (openProductId === productId) renderProductModal();
+}
+
+// ── Product quick-view modal ──
+let openProductId = null;
+
+function openProductModal(id) {
+  openProductId = id;
+  renderProductModal();
+  document.getElementById('product-modal-overlay').classList.add('open');
+  document.getElementById('product-modal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeProductModal() {
+  openProductId = null;
+  document.getElementById('product-modal-overlay').classList.remove('open');
+  document.getElementById('product-modal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function renderProductModal() {
+  const product = PRODUCTS.find(p => p.id === openProductId);
+  if (!product) return;
+
+  const variants = product.variants || [];
+  const activeIdx = selectedVariant[product.id] || 0;
+  const activeVariant = variants[activeIdx];
+  const displayImage = (activeVariant && activeVariant.image) ? activeVariant.image : product.image;
+
+  const swatches = variants.length > 1 ? `
+    <div class="variant-swatches">
+      ${variants.map((v, i) => `
+        <button
+          type="button"
+          class="swatch ${i === activeIdx ? 'active' : ''}"
+          style="background:${v.color || '#ccc'}"
+          title="${v.label || ''}"
+          aria-label="${v.label || 'variant'}"
+          onclick="selectVariant(${product.id}, ${i})"
+        ></button>
+      `).join('')}
+      <span class="variant-label">${activeVariant ? activeVariant.label : ''}</span>
+    </div>
+  ` : '';
+
+  document.getElementById('product-modal-inner').innerHTML = `
+    <div class="product-modal-img">
+      ${displayImage
+        ? `<img src="${displayImage}" alt="${product.name}" />`
+        : `<div class="product-img-placeholder"></div>`}
+    </div>
+    <div class="product-modal-details">
+      <h3>${product.name}</h3>
+      <p class="product-modal-desc">${product.description}</p>
+      ${swatches}
+      <div class="product-modal-price">₱${product.price.toLocaleString()}</div>
+      <button class="add-btn add-btn-large" onclick="addToCart(${product.id})">ADD TO CART</button>
+    </div>
+  `;
 }
 
 // ── Add to cart ──
