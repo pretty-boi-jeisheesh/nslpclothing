@@ -1,5 +1,6 @@
 backend:
-  name: git-gateway
+  name: github
+  repo: pretty-boi-jeisheesh/nslpclothing
   branch: main   # change this to "master" if that's your repo's default branch
 
 # Where uploaded photos get stored, and how the site links to them
