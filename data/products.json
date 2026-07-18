@@ -2,17 +2,17 @@
   "products": [
     {
       "id": 1,
-      "name": "F1 Engineered for Everyday Speed.",
-      "description": "F1  embodies speed, precision, and quiet confidence. Inspired by the relentless pursuit of performance, this piece is made for those who stay focused, move with purpose, and never settle for average. \n\nDesigned with a clean, modern aesthetic, F1 – BLACK isn't about chasing attention it's about making a statement through simplicity. Whether you're on the streets, at work, or out with friends, this shirt is built to match your pace and mindset.",
+      "name": "F1-BLACK",
+      "description": "F1 – BLACK embodies speed, precision, and quiet confidence. Inspired by the relentless pursuit of performance, this piece is made for those who stay focused, move with purpose, and never settle for average. The deep black color symbolizes strength, versatility, and a timeless style that fits every occasion.\n\nDesigned with a clean, modern aesthetic, F1 – BLACK isn't about chasing attention it's about making a statement through simplicity. Whether you're on the streets, at work, or out with friends, this shirt is built to match your pace and mindset.",
       "price": 600,
-      "image": "/images/uploads/f1-black.png",
-      "variants": [
-        {
-          "label": "WHITE",
-          "image": "/images/uploads/f1-white.png",
-          "color": "#ffffff"
-        }
-      ]
+      "image": "/images/uploads/f1-black.png"
+    },
+    {
+      "id": 2,
+      "name": "F1 - WHITE",
+      "description": "F1 – WHITE is a symbol of clean beginnings, effortless confidence, and timeless style. Inspired by the spirit of moving forward without distractions, this piece reflects a mindset focused on progress, discipline, and simplicity. The crisp white finish represents clarity, while the minimalist design keeps the attention on the attitude behind the wearer.\n\nVersatile and easy to pair with any outfit, F1 – WHITE is built for everyday wear whether you're chasing goals, creating your own path, or simply embracing a clean aesthetic. It's a staple designed to remain relevant beyond trends.",
+      "price": 600,
+      "image": "/images/uploads/f1-white.png"
     }
   ]
 }
