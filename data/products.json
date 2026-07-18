@@ -13,6 +13,27 @@
       "description": "F1 – WHITE is a symbol of clean beginnings, effortless confidence, and timeless style. Inspired by the spirit of moving forward without distractions, this piece reflects a mindset focused on progress, discipline, and simplicity. The crisp white finish represents clarity, while the minimalist design keeps the attention on the attitude behind the wearer.\n\nVersatile and easy to pair with any outfit, F1 – WHITE is built for everyday wear whether you're chasing goals, creating your own path, or simply embracing a clean aesthetic. It's a staple designed to remain relevant beyond trends.",
       "price": 600,
       "image": "/images/uploads/f1-white.png"
+    },
+    {
+      "id": 3,
+      "name": "FLIGHT TEE",
+      "description": "FLIGHT TEE is inspired by the freedom of birds moving without limits, adapting to every direction, and rising above every challenge. This design represents the mindset of pushing forward every single day, no matter where life takes you. Every flight begins with a choice to move, explore, and keep growing.\n\nFeaturing a bird-inspired graphic, FLIGHT TEE blends freedom with determination, reminding the wearer that progress isn't about speed it's about consistently moving toward your goals. Designed for everyday comfort and effortless style, this piece reflects the spirit of those who refuse to stay grounded.",
+      "price": 600,
+      "image": "/images/uploads/flightstee-black.png"
+    },
+    {
+      "id": 4,
+      "name": "HIGHLAND GREEN",
+      "description": "HIGHLAND is inspired by the calm strength of nature and the quiet confidence found in higher ground. Drawing from the rich green landscapes of the highlands, this piece represents growth, resilience, and the courage to keep climbing no matter how steep the path becomes. It's a reminder that the best views come after the hardest journeys.\n\nDesigned with a timeless, earthy tone, HIGHLAND brings together comfort and versatility, making it a staple for everyday wear. Whether you're exploring the outdoors or navigating the pace of city life, this color reflects a mindset rooted in balance, determination, and authenticity.",
+      "price": 600,
+      "image": "/images/uploads/highland-green.png"
+    },
+    {
+      "id": 5,
+      "name": "HRTBREAKSZN",
+      "description": "HRTBREAKSZN captures the chapter where pain becomes purpose. Inspired by the emotions that come with heartbreak, this piece isn't about dwelling on the past—it's about embracing growth, resilience, and the strength to move forward. Every scar tells a story, and every ending creates space for a new beginning.\n\nDesigned with a bold streetwear attitude, HRTBREAKSZN speaks to those who have faced disappointment but refused to let it define them. It's a reminder that even during your hardest season, you can come back stronger, wiser, and more confident than before.",
+      "price": 600,
+      "image": "/images/uploads/hrtbreakszn-black.png"
     }
   ]
 }
