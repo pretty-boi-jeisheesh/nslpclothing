@@ -1,6 +1,6 @@
 backend:
   name: git-gateway
-  branch: nslpclothing   # change this to "master" if that's your repo's default branch
+  branch: main   # change this to "master" if that's your repo's default branch
 
 # Where uploaded photos get stored, and how the site links to them
 media_folder: "images/uploads"
